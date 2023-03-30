@@ -1,32 +1,19 @@
-from playwright.sync_api import sync_playwright
+import asyncio
+
 import pytest
+from playwright.async_api import async_playwright
 from pages.search_page import SearchPage
-from core.browser import BrowserInit
 
-# async def get_browser():
-#     browser = BrowserInit()
-#     page = await browser.browser_fixture()
-#     return page
+@pytest.mark.asyncio
+async def test_input():
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(headless=False)
 
-def browser_fixture():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
-        yield page
-        page.close()
-        browser.close()
-
-def test_1():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
-        # page = browser_fixture()
+        page = await browser.new_page()
         search_page = SearchPage(page)
-        search_page.navigate()
-        # await search_page.search("search query")
-        # await page.screenshot(path=f"screenshots\\example.png")
-        # print(page.title())
-
-
+        await search_page.navigate()
+        await search_page.search("search query")
+        await page.screenshot(path=f"screenshots\\example.png")
+        print(await page.title())
+        await browser.close()
+# asyncio.run(test_input())
