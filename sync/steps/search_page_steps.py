@@ -5,8 +5,6 @@ from playwright.sync_api import sync_playwright
 class SearchPageSteps(SearchPage):
     @property
     def search_page_func(self) -> Type[SearchPage]:
-        # with sync_playwright() as PW:
-        #     playwright = PW
         return SearchPage
 
     def navigate(self):
