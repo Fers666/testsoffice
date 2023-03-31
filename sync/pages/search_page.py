@@ -1,6 +1,6 @@
 from playwright.sync_api import Locator
 
-from sync.pages.base_page import BasePage
+from ..pages.base_page import BasePage
 
 
 class SearchPage(BasePage):

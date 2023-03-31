@@ -1,6 +1,7 @@
-from playwright.sync_api import Page, Browser, Playwright
+from playwright.sync_api import Page, Browser, Playwright, sync_playwright
+
 class BasePage:
-    def __init__(self, playwright: Playwright):
+    def __init__(self, playwright):
         self.browser: Browser = playwright.chromium.launch(headless=False)
         self.page: Page = self.browser.new_page()
 
